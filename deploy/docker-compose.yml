@@ -1,0 +1,58 @@
+# 项目名固定为 jpstudy：容器、网络、卷均带此前缀，与宿主机其他服务互不打扰。
+name: jpstudy
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jpstudy
+      POSTGRES_USER: jpstudy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?请在 .env 中设置 POSTGRES_PASSWORD}
+      TZ: Asia/Shanghai
+    # 1G 内存的小机器：收紧缓冲与连接数
+    command: >
+      postgres
+      -c shared_buffers=96MB
+      -c effective_cache_size=256MB
+      -c work_mem=4MB
+      -c maintenance_work_mem=32MB
+      -c max_connections=30
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jpstudy -d jpstudy"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: &logging
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+    # 不映射端口：数据库只在 compose 内网可见
+
+  app:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    image: jpstudy-app:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://jpstudy:${POSTGRES_PASSWORD}@db:5432/jpstudy
+      HOST: 0.0.0.0
+      PORT: "3100"
+      BACKUP_STATUS_FILE: /backups/status.json
+      NODE_OPTIONS: --max-old-space-size=256
+    depends_on:
+      db: { condition: service_healthy }
+    ports:
+      - "127.0.0.1:3100:3100"   # 只给宿主机 Caddy 反代
+    volumes:
+      - ../backups:/backups:ro
+      - ../updates:/updates:ro
+      - ../models:/models:ro   # 离线语音识别模型（v1.6.0）
+      - ../audio:/audio          # 朗读音频缓存（属主须为 1000:1000，即容器里的 node 用户）
+    logging: *logging
+
+volumes:
+  pgdata:

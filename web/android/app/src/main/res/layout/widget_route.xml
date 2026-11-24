@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/w_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <TextView android:layout_width="16dp" android:layout_height="16dp" android:layout_marginEnd="6dp" android:background="@drawable/widget_logo" android:gravity="center"
+            android:text="駅" android:textColor="@color/w_bg" android:textSize="10sp" android:textStyle="bold" android:includeFontPadding="false" />
+        <TextView android:id="@+id/w_lesson" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:text="一駅" android:textColor="@color/w_ink" android:textSize="13sp" android:maxLines="1" android:ellipsize="end" />
+        <TextView android:id="@+id/w_stations" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textColor="@color/w_accent" android:textSize="12sp" />
+    </LinearLayout>
+
+    <ProgressBar android:id="@+id/w_bar" style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent" android:layout_height="4dp" android:layout_marginTop="8dp" android:layout_marginBottom="10dp"
+        android:indeterminate="false" android:max="1" android:progress="0" android:progressDrawable="@drawable/widget_bar" />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:id="@+id/w_s1_icon" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="○" android:textColor="@color/w_muted" android:textSize="13sp" android:layout_marginEnd="4dp" />
+                <TextView android:id="@+id/w_s1_title" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:textColor="@color/w_ink" android:textSize="13sp" android:maxLines="1" android:ellipsize="end" />
+            </LinearLayout>
+            <TextView android:id="@+id/w_s1_detail" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/w_muted" android:textSize="11sp" android:maxLines="1" android:ellipsize="end" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:id="@+id/w_s2_icon" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="○" android:textColor="@color/w_muted" android:textSize="13sp" android:layout_marginEnd="4dp" />
+                <TextView android:id="@+id/w_s2_title" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:textColor="@color/w_ink" android:textSize="13sp" android:maxLines="1" android:ellipsize="end" />
+            </LinearLayout>
+            <TextView android:id="@+id/w_s2_detail" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/w_muted" android:textSize="11sp" android:maxLines="1" android:ellipsize="end" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:id="@+id/w_s3_icon" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="○" android:textColor="@color/w_muted" android:textSize="13sp" android:layout_marginEnd="4dp" />
+                <TextView android:id="@+id/w_s3_title" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:textColor="@color/w_ink" android:textSize="13sp" android:maxLines="1" android:ellipsize="end" />
+            </LinearLayout>
+            <TextView android:id="@+id/w_s3_detail" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/w_muted" android:textSize="11sp" android:maxLines="1" android:ellipsize="end" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <TextView android:id="@+id/w_today" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textColor="@color/w_muted" android:textSize="12sp" android:maxLines="1" />
+        <TextView android:id="@+id/w_go" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/widget_pill_accent" android:paddingStart="14dp" android:paddingEnd="14dp"
+            android:paddingTop="5dp" android:paddingBottom="5dp" android:text="继续学" android:textColor="@color/w_on_accent" android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

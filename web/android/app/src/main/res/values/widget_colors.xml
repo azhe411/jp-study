@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 桌面小组件的配色（0.14.1）：浅色这一份，深色在 values-night，跟着系统切换 -->
+<resources>
+    <color name="w_bg">#FFFFFFFF</color>
+    <color name="w_ink">#FF1D2129</color>
+    <color name="w_muted">#FF86909C</color>
+    <color name="w_line">#FFF2F3F5</color>
+    <color name="w_accent">#FF5F9E1F</color>
+    <color name="w_accent_soft">#FFE8F3DC</color>
+    <color name="w_on_accent">#FFFFFFFF</color>
+</resources>

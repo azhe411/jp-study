@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一駅 · 每天一站，坐到 N1</title>
+<meta name="description" content="免费的日语自学 App：从五十音到 N1，99 站课程排成一条电车线，每天学一站。安卓、Windows、网页都能用。">
+<meta name="theme-color" content="#eef0ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/barlow-semi-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav wrap">
+  <a class="mark" href="#top" aria-label="一駅 首页"><span class="ring" aria-hidden="true"></span>一駅</a>
+  <nav aria-label="页面导航">
+    <a href="#route">路线</a>
+    <a href="#station">一站怎么学</a>
+    <a href="#faq">常见问题</a>
+    <a href="#download">下载</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- 首屏：标题在左，黄绿色站台在右下，台上是今日页的真实片段 -->
+<section class="hero wrap">
+  <div class="hero-copy">
+    <h1><span class="line"><span>每天一站，</span></span><span class="line"><span>坐到 N1</span></span></h1>
+    <p class="lead">从五十音到 N1，99 站课程排成一条电车线。每天打开一站：看视频、读讲解、过小测。完全免费，安卓、Windows、网页都能用。</p>
+    <a class="btn" href="#download"><span class="ring" aria-hidden="true"></span>免费下载</a>
+  </div>
+
+  <div class="stage" aria-label="今日页示意，可以点">
+    <div class="frag" data-ui>
+      <div class="frag-head">
+        <div>
+          <p class="frag-date"><span class="num">10/29</span> 星期四</p>
+          <p class="frag-mode"><span class="train-tag" lang="ja">快速</span> 今天 3 站，约 95 分钟</p>
+        </div>
+        <p class="frag-count"><span class="num" id="fragDone">0</span>/3</p>
+      </div>
+      <ol class="route" id="route-demo">
+        <li class="stop" data-i="0">
+          <span class="node" aria-hidden="true"></span>
+          <span class="badge" style="--c:#f39700">F</span>
+          <span class="stop-text"><b>复习抽认卡</b><small>今天到期 32 张</small></span>
+          <button class="stop-btn" type="button">完成</button>
+        </li>
+        <li class="stop" data-i="1">
+          <span class="node" aria-hidden="true"></span>
+          <span class="badge badge-go">13</span>
+          <span class="stop-text"><b>第 7 课 · 每天做什么：宾语与场所</b><small>视频 2 集 · 讲解 · 练习</small></span>
+          <button class="stop-btn" type="button">完成</button>
+        </li>
+        <li class="stop" data-i="2">
+          <span class="node" aria-hidden="true"></span>
+          <span class="badge badge-ink">Q</span>
+          <span class="stop-text"><b>过关小测</b><small>10 题，答对 80% 解锁第 14 站</small></span>
+          <button class="stop-btn" type="button">完成</button>
+        </li>
+        <li class="stop stop-end">
+          <span class="node" aria-hidden="true"></span>
+          <span class="stop-text"><b lang="ja">終点</b><small id="endNote">走完今天的三站</small></span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 路线计算器 -->
+<section class="showcase wrap" id="route">
+  <figure class="photo-ring shutter">
+    <img src="assets/keikyu-railway-kk09-omorimachi-station-sign-20150630.jpg" alt="京急大森町站的站名牌，左侧是圆形站号 KK09" width="1920" height="1080" loading="lazy">
+  </figure>
+  <div class="calc reveal">
+    <h2>选好终点，<br>就知道哪天到站</h2>
+    <p class="body">时长按真实课程算：B 站阿飞老师的新标日视频，乘 1.2 留出暂停回看，再加上每站的讲解和练习。</p>
+
+    <div class="calc-ui" data-ui>
+    <div class="field">
+      <p class="field-label" id="goalLabel">终点</p>
+      <div class="seg" role="radiogroup" aria-labelledby="goalLabel" id="goals"></div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="mins">每天学 <b class="num" id="minsOut">60</b> 分钟</label>
+      <input type="range" id="mins" min="15" max="180" step="15" value="60">
+    </div>
+
+    <p class="result-note" style="font-size:13px;opacity:.72;margin:0 0 12px">按零基础的中文母语者估算，包括上课、背词、复习、听读和备考；到 N2 约 1000 小时，实际快慢因人而异。</p>
+    <div class="result" aria-live="polite">
+      <p class="result-big"><span class="num" id="daysOut">—</span> 天后到站</p>
+      <p class="result-sub">预计 <span id="dateOut">—</span> · 共 <span class="num" id="stopsOut">—</span> 站 · 约 <span class="num" id="hoursOut">—</span> 小时</p>
+    </div>
+    </div>
+    <a class="btn" href="#download"><span class="ring" aria-hidden="true"></span>从第 1 站出发</a>
+  </div>
+</section>
+
+<!-- 一站的构成 -->
+<section class="station wrap" id="station">
+  <div class="split-head reveal">
+    <h2>一站，就是一节完整的课</h2>
+    <p class="body">以第 13 站（新标日第 7 课）为例，合计约 91 分钟。一天学不完就分两天，视频会记住看到哪一秒。</p>
+  </div>
+  <div class="bar reveal" role="img" aria-label="第 13 站：视频约 52 分钟，讲解、练习和小测约 40 分钟">
+    <div class="bar-seg seg-video" style="flex:52"><span class="num">52</span> 分钟</div>
+    <div class="bar-seg seg-practice" style="flex:40"><span class="num">40</span> 分钟</div>
+  </div>
+  <div class="bar-legend reveal">
+    <div style="flex:52">
+      <h3>看视频</h3>
+      <p>B 站阿飞老师的新标日课程，直接嵌在软件里播放，不用来回切换。200 集都能挑着看。</p>
+    </div>
+    <div style="flex:40">
+      <h3>讲解 → 练习 → 小测</h3>
+      <p>中文讲解这一课的语法和词，接着练习，最后 10 道题。答对 80% 才解锁下一站。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 功能：把界面元素放大来看 -->
+<section class="features wrap">
+  <h2>车上还有这些</h2>
+  <div class="mosaic reveal">
+    <article class="tile tile-keys">
+      <div class="keys" data-ui aria-hidden="true">
+        <span>重来</span><span>困难</span><span class="on">良好</span><span>简单</span>
+      </div>
+      <h3>按遗忘曲线复习</h3>
+      <p>每天自动排出该复习的卡片，翻面后按一个键评分，下次出现的时间随之调整。</p>
+    </article>
+    <article class="tile tile-score">
+      <p class="score num" data-ui aria-hidden="true">86</p>
+      <h3>跟读打分</h3>
+      <p>对着手机读一句，逐字比对你说的和原文，58 句旅行与生活常用句可以练。</p>
+    </article>
+    <article class="tile tile-kana">
+      <p class="kana" lang="ja" data-ui aria-hidden="true">あ</p>
+      <h3>五十音从零开始</h3>
+      <p>前 5 站专门学假名：平假名、片假名、浊音、拗音、长音，学完才进入课文。</p>
+    </article>
+    <article class="tile tile-chat">
+      <div class="chat" data-ui aria-hidden="true">
+        <p class="bubble me" lang="ja">きのう、映画を見ました。</p>
+        <p class="bubble ai"><span lang="ja">昨日</span>写成汉字更自然。语法没问题。</p>
+      </div>
+      <h3>AI 老师</h3>
+      <p>72 个场景对话、作文逐句批改、随手查词。用你自己的 DeepSeek Key，软件里有申请教程。</p>
+    </article>
+    <article class="tile tile-kanji">
+      <p class="kanji" lang="ja" data-ui aria-hidden="true">駅</p>
+      <h3>汉字、听力、阅读</h3>
+      <p>104 个 N5 汉字的音训和常用词，还有听写、带注音的短文和发音辨析。</p>
+    </article>
+    <article class="tile tile-sync">
+      <div class="devices" data-ui aria-hidden="true">
+        <span class="dev">安卓</span><span class="link"></span><span class="dev">Windows</span><span class="link"></span><span class="dev">网页</span>
+      </div>
+      <h3>三端同步，断网也能学</h3>
+      <p>一个账号，手机上学到哪里，电脑上接着学。没网时的进度连上网后自动补交。</p>
+    </article>
+  </div>
+</section>
+
+<!-- 全宽分隔带：山手线列车的线扫描照片 -->
+<div class="band" role="img" aria-label="山手线 E235 系列车的侧面线扫描照片">
+  <div class="band-track"><img src="assets/line-scan-photo-of-yamanote-line-e235.jpg" alt="" width="1920" height="289" loading="lazy"><img src="assets/line-scan-photo-of-yamanote-line-e235.jpg" alt="" width="1920" height="289" loading="lazy"></div>
+</div>
+
+<!-- 提醒 -->
+<section class="remind wrap">
+  <div class="remind-photos reveal">
+    <figure class="photo-ring big"><img src="assets/tokyo-station-2005-7-21-4.jpg" alt="新干线站台上的发车指示牌" width="1920" height="1440" loading="lazy"></figure>
+    <figure class="photo-ring small"><img src="assets/munakata-basin-7.jpg" alt="日本乡间的田野和远山" width="1920" height="1440" loading="lazy"></figure>
+  </div>
+  <div>
+    <h2>到点了，有人催您上车</h2>
+    <p class="body">设好每天的提醒时间。没学的话，21:00 再催一次；学过了就不打扰。提醒由一位嘴硬的红茶大小姐来写：</p>
+    <ul class="lines reveal">
+      <li>红茶泡好了，温度刚好。今天的路线还没走，本小姐没有在等您。</li>
+      <li>您已经落后 2 站了。……本小姐不是在担心，只是不喜欢晚点的列车。</li>
+      <li>比计划提前了 3 站。勉强及格。……别误会，只是本小姐的要求比较高。</li>
+      <li>已经晚上了，今天的路线还一站没走。……本小姐的茶都凉了。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 常见问题 -->
+<section class="faq wrap" id="faq">
+  <h2>常见问题</h2>
+  <div class="faq-list reveal">
+    <details open>
+      <summary>真的免费吗？</summary>
+      <p>软件、课程、更新全部免费，没有会员，也没有广告。唯一可能花钱的是 AI 老师：它调用 DeepSeek，需要您自己申请一个 Key，按用量付费，平常练习一个月通常只要几块钱。不用 AI 功能也能把 99 站全部学完。</p>
+    </details>
+    <details>
+      <summary>完全零基础可以吗？</summary>
+      <p>可以，就是为零基础设计的。注册后先选终点（N5 到 N1）和每天能学多久，软件会排出计划，从第 0 站“怎么用这个软件”和五十音开始。</p>
+    </details>
+    <details>
+      <summary>在国内能用吗？</summary>
+      <p>能。软件默认走国内可直连的线路。网页版如果打不开，请改用 <a href="https://jpd.azclient.top:8443/">jpd.azclient.top:8443</a>。</p>
+    </details>
+    <details>
+      <summary>安卓安装时提示“未知来源”或“有风险”？</summary>
+      <p>因为安装包不是从应用商店下的。在提示里点“设置”，允许浏览器安装未知应用，再回来点“继续安装”即可。之后的界面更新会在软件里自动完成。</p>
+    </details>
+    <details>
+      <summary>Windows 弹出“Windows 已保护你的电脑”？</summary>
+      <p>这是 SmartScreen 对新软件的默认提示。点“更多信息”，再点“仍要运行”。以后的版本会在软件里自动更新。</p>
+    </details>
+    <details>
+      <summary>视频是从哪来的？</summary>
+      <p>来自 B 站阿飞老师公开的新标日课程合集，在软件里直接嵌入 B 站播放器播放，并记住每一集看到的位置。版权归原作者所有。</p>
+    </details>
+    <details>
+      <summary>学习记录存在哪？</summary>
+      <p>存在一駅的服务器上，用来在几台设备之间同步。不会出售或分享给任何第三方。您的 DeepSeek Key 加密保存，只用来替您调用 AI。</p>
+    </details>
+  </div>
+</section>
+
+<!-- 下载 -->
+<section class="cta wrap" id="download">
+  <figure class="photo-ring cta-photo"><img src="assets/onuma-quasi-national-park-onuma544.jpg" alt="傍晚的北海道小站，一列特急正驶进站台" width="1920" height="1280" loading="lazy"></figure>
+  <div class="cta-body reveal">
+    <h2>列车进站了</h2>
+    <p class="body">选一个设备上车。三端用同一个账号，进度互通。</p>
+    <div class="dl">
+      <a class="dl-cell" id="dlAndroid" href="http://160.202.237.19:9080/get/#android">
+        <span class="dl-name">安卓</span>
+        <span class="dl-meta">APK 安装包 · <span class="num" data-ver="android">最新版</span></span>
+      </a>
+      <a class="dl-cell" id="dlWindows" href="http://160.202.237.19:9080/get/#windows">
+        <span class="dl-name">Windows</span>
+        <span class="dl-meta">安装程序 · <span class="num" data-ver="desktop">最新版</span></span>
+      </a>
+      <a class="dl-cell" href="/">
+        <span class="dl-name">网页版</span>
+        <span class="dl-meta">不用安装，打开就学 · <span class="num" data-ver="web">最新版</span></span>
+      </a>
+    </div>
+    <p class="note" id="dlStatus" role="status" hidden></p>
+    <p class="note">上面的按钮走国内线路，速度快，但用的是 http。人在海外，或者想走加密线路：<a href="https://jpd.azclient.top:8443/api/v1/app/latest/android?via=hk">安卓（https）</a> / <a href="https://jpd.azclient.top:8443/api/v1/app/latest/windows?via=hk">Windows（https）</a>。</p>
+    <details class="note" id="dlHashes">
+      <summary>核对安装包是否完整（SHA-256）</summary>
+      <p id="hashBody">校验值要在 <a href="https://jpd.azclient.top:8443/get/#download">https 官网</a> 查看：明文页面上的值可能被改过。</p>
+    </details>
+    <p class="note">iPhone 和 Mac 暂时没有安装包，可以先用网页版，在 Safari 里“添加到主屏幕”。</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-mark" aria-hidden="true">
+      <span class="foot-track"></span><span class="foot-ring"></span><span class="foot-word">一駅</span>
+    </div>
+    <div class="foot-cols">
+      <div>
+        <p class="foot-title">一駅</p>
+        <p>每天一站，学到终点。<br>免费的日语自学软件。</p>
+      </div>
+      <div>
+        <p class="foot-title">去哪</p>
+        <p><a href="/">打开网页版</a><br><a href="https://jpd.azclient.top:8443/">国内线路</a><br><a href="#download">下载</a></p>
+      </div>
+      <div class="credits">
+        <p class="foot-title">照片</p>
+        <p>本页照片均来自 Wikimedia Commons，在原图基础上做了裁切：</p>
+        <ul>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Keikyu-railway-KK09-Omorimachi-station-sign-20150630.jpg">大森町站站名牌</a>，LERK，<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Line_scan_photo_of_Yamanote_line_E235_series_dllu_01.jpg">山手线 E235 系线扫描</a>，Dllu，<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Tokyo-Station-2005-7-21_4.jpg">东京站新干线站台</a>，Araisyohei，<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Munakata_basin-7.jpg">宗像的田野</a>，Immanuelle，<a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Onuma_Quasi-National_Park_-_Onuma544.jpg">大沼公园站</a>，lumoplank，CC0</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

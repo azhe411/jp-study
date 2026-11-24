@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "@fontsource/barlow-semi-condensed/500.css";
+@import "@fontsource/barlow-semi-condensed/600.css";
+@import "@fontsource/barlow-semi-condensed/700.css";
+
+/* 暗色由 <html class="dark"> 控制：跟随系统或设置页里的 theme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * 设计令牌 —— 站台标识系统：
+ *   地面是车站的混凝土灰，暗色是夜间站台的深蓝；
+ *   主操作用山手线的黄绿；每个学习模块有自己的"线路色"（见 lib/lines.ts）。
+ */
+:root {
+  --ground: #eef0ee;
+  --surface: #fbfcfb;
+  --surface-2: #e4e7e4;
+  --ink: #15191f;
+  --ink-2: #47505c;
+  --ink-3: #6f7884;
+  --line: #d5dad6;
+  --rail: #c3c9c5;
+  --go: #80c241;
+  --go-ink: #102006;
+  --go-soft: #e3f2d4;
+  --ok: #187a45;
+  --warn: #9a5b00;
+  --danger: #c4161c;
+  --danger-soft: #fbe3e2;
+  --shadow: 216 20% 18%;
+  --chart: #5f9e2b;
+  color-scheme: light;
+}
+.dark {
+  --ground: #0d1117;
+  --surface: #151b23;
+  --surface-2: #1d2530;
+  --ink: #e8ecf1;
+  --ink-2: #aab4c0;
+  --ink-3: #7f8a97;
+  --line: #273140;
+  --rail: #33404f;
+  --go: #8fd14f;
+  --go-ink: #0d1a05;
+  --go-soft: #1f3313;
+  --ok: #4cc287;
+  --warn: #f0b13a;
+  --danger: #ff6b6b;
+  --danger-soft: #3a1618;
+  --shadow: 216 60% 2%;
+  --chart: #6aa834;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-rail: var(--rail);
+  --color-go: var(--go);
+  --color-go-ink: var(--go-ink);
+  --color-go-soft: var(--go-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", system-ui, sans-serif;
+  /* 站名标识的数字与字母：DIN 血统的窄体 */
+  --font-sign: "Barlow Semi Condensed", "DIN Alternate", "Bahnschrift", var(--font-sans);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  /* 安全区：Capacitor 8 注入 --safe-area-inset-*；浏览器与 Tauri 用 env()，不支持时为 0 */
+  --sat: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --sab: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+
+html, body, #root { min-height: 100%; }
+#root { padding-top: var(--sat); }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 日文要用日文字形："直""骨"之类的字中日写法不同 */
+:lang(ja) {
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", "Noto Sans JP", "Noto Sans CJK JP", var(--font-sans);
+}
+
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.01em; }
+p { text-wrap: pretty; }
+
+/* 浏览器自带的那部分界面也属于设计 */
+::selection { background: color-mix(in oklab, var(--go) 55%, transparent); color: var(--ink); }
+input, textarea { caret-color: var(--go); }
+:focus-visible { outline: 2px solid var(--go); outline-offset: 2px; border-radius: 6px; }
+* { scrollbar-width: thin; scrollbar-color: var(--rail) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--rail); border-radius: 10px; border: 3px solid var(--ground); }
+::-webkit-scrollbar-track { background: transparent; }
+a { text-underline-offset: 3px; }
+
+.font-sign { font-family: var(--font-sign); font-feature-settings: "tnum" 1; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* 抬起的层只用一种手段：带偏移的柔和阴影，色相取自地面 */
+.lift { box-shadow: 0 1px 2px hsl(var(--shadow) / 0.06), 0 8px 24px -12px hsl(var(--shadow) / 0.18); }
+
+/* ───────────── 动效 ───────────── */
+
+@keyframes rise-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rail-fill { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+@keyframes stamp { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--go) 60%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+
+/* 列表首次出现时依次进场，总延迟封顶 */
+.stagger > * { animation: rise-in 420ms var(--ease-out-expo) both; }
+.stagger > *:nth-child(2) { animation-delay: 30ms; }
+.stagger > *:nth-child(3) { animation-delay: 60ms; }
+.stagger > *:nth-child(4) { animation-delay: 90ms; }
+.stagger > *:nth-child(5) { animation-delay: 120ms; }
+.stagger > *:nth-child(n + 6) { animation-delay: 150ms; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, color-mix(in oklab, var(--surface-2) 60%, var(--surface)) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 10px;
+}
+
+/* 翻卡：正反两面共用一个 3D 舞台 */
+.flip-stage { perspective: 1400px; }
+.flip-card { transform-style: preserve-3d; transition: transform 520ms var(--ease-out-expo); }
+.flip-card[data-flipped="true"] { transform: rotateY(180deg); }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { transform: rotateY(180deg); }
+
+/* 页面之间：浏览器支持 View Transitions 时淡入淡出，不支持就直接切换 */
+::view-transition-old(root) { animation: 140ms ease-in both fade-out; }
+::view-transition-new(root) { animation: 260ms var(--ease-out-expo) both fade-in; }
+@keyframes fade-out { to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger > * { animation: fade-in 200ms ease-out both; animation-delay: 0ms !important; }
+  .flip-card { transition-duration: 1ms; }
+  .skeleton { animation: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}

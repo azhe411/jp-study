@@ -1,0 +1,22 @@
+# jp-study（https://jp.azclient.top）：/api 反代到 app，其余为 PWA 静态文件 + SPA 回退
+jp.azclient.top {
+	encode zstd gzip
+	tls /etc/caddy/ssl/cf-origin-bundle.crt /etc/caddy/ssl/cf-origin.key
+	header Strict-Transport-Security "max-age=31536000"
+
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3100
+	}
+
+	handle {
+		root * /opt/jp-study/web/dist
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		@shell not path /assets/*
+		header @shell Cache-Control "no-cache"
+		@manifest path *.webmanifest
+		header @manifest Content-Type "application/manifest+json"
+		try_files {path} {path}index.html /index.html
+		file_server
+	}
+}

@@ -1,0 +1,26 @@
+# jp-study 国内直连（灰云，不经 Cloudflare）：https://jpd.azclient.top:8443
+# 证书由 acme.sh（DNS-01，Cloudflare API）签发，安装在 /etc/caddy/ssl-jpd
+jpd.azclient.top:8443 {
+	encode zstd gzip
+	tls /etc/caddy/ssl-jpd/fullchain.pem /etc/caddy/ssl-jpd/key.pem
+	header Strict-Transport-Security "max-age=31536000"
+
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3100 {
+			# 直连没有 Cloudflare 兜底：丢掉客户端自带的 CF-Connecting-IP，免得被用来绕过限流
+			header_up -Cf-Connecting-Ip
+		}
+	}
+
+	handle {
+		root * /opt/jp-study/web/dist
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		@shell not path /assets/*
+		header @shell Cache-Control "no-cache"
+		@manifest path *.webmanifest
+		header @manifest Content-Type "application/manifest+json"
+		try_files {path} {path}index.html /index.html
+		file_server
+	}
+}

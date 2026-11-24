@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">一駅</string>
+    <string name="title_activity_main">一駅</string>
+    <string name="package_name">top.azclient.jp</string>
+    <string name="custom_url_scheme">top.azclient.jp</string>
+    <string name="widget_progress_label">一駅 · 今日进度</string>
+    <string name="widget_progress_desc">今天学了几分钟，离每日目标还差多少</string>
+    <string name="widget_route_label">一駅 · 今日路线</string>
+    <string name="widget_route_desc">当前这一站和今天的三步，点一下接着学</string>
+    <string name="widget_word_label">一駅 · 随手一词</string>
+    <string name="widget_word_desc">在桌面上翻卡，背还没记牢的词</string>
+    <string name="widget_coach_label">一駅 · 克劳迪娅</string>
+    <string name="widget_coach_desc">克劳迪娅按今天的进度说一句</string>
+</resources>

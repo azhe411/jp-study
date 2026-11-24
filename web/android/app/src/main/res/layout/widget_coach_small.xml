@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 克劳迪娅缩到 2×2 时：放不下半身像，只在标题旁放头像 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/w_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/widget_claudia_head" android:contentDescription="克劳迪娅" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp"
+            android:text="克劳迪娅" android:textColor="@color/w_muted" android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView android:id="@+id/w_line" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:layout_marginTop="8dp" android:lineSpacingExtra="2dp" android:text="打开一駅，本小姐才知道您学到哪了。"
+        android:textColor="@color/w_ink" android:textSize="13sp" android:maxLines="5" android:ellipsize="end" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="点我去学习 ›" android:textColor="@color/w_accent" android:textSize="11sp" />
+</LinearLayout>

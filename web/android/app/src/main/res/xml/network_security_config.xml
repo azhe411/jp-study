@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 只放行国内下载镜像的明文 http（热更新包有 sha256 校验）；其他地址仍然只能走 https -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">160.202.237.19</domain>
+    </domain-config>
+</network-security-config>
